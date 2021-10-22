@@ -1,0 +1,29 @@
+--- # Connection Block 
+# ansible-playbook taks1.yaml
+- name: My First Playbook
+  hosts: all
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  task: 
+  - name: Add users to Amazon
+    when: ( ansible_facts['distribution'] == "Amazon or ansible_facts['distribution] == CentOS' )
+    ansible.builtin.user:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - bob
+    - ben
+    - lisa
+    - katty
+
+ - name: Set up multiple authorized keys for Amazon users
+   ansible.posix.authorized_key:
+    user: deploy
+    state: present
+    key: '{{ item }}'
+   with_file:
+    - public_keys/doe-bob
+    - public_keys/doe-ben
+    - public_keys/doe-lisa
+    - public_keys/doe-katty
