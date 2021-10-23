@@ -1,0 +1,27 @@
+---
+- hosts: "localhost"
+  connection: "local"
+  become: true
+  become_method: sudo 
+  user: ec2-user
+
+  vars:
+    users:
+    - bob
+    - ben
+    - lisa
+    - katty
+  
+  tasks:
+  
+  - name: "Create user accounts and add users"
+    when: ( ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS" )
+    user:
+      name: "{{ item }}"
+    with_items: "{{ users }}"
+
+  - name: "Add authorized keys"
+    authorized_key:
+      user: "{{ item }}"
+      key: "{{ lookup('file', 'files/'+ item + '.key.pub') }}"
+    with_items: "{{ users }}"

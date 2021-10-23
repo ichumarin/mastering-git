@@ -1,0 +1,16 @@
+--- # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html#id1
+- name: Install packages
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks: 
+  
+  - name: Install packages 
+    ansible.builtin.package:
+      name: 
+      - telnet
+      - wget
+      - elinks
+      - unzip
+      state: present            #absent       #latest

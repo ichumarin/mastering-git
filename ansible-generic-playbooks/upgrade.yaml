@@ -1,0 +1,13 @@
+--- # Connection
+- name: Install packages
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks:
+  
+  - name: Upgrade All 
+    ansible.builtin.package:
+      name: "*"
+      state: latest            #absent       #latest
+

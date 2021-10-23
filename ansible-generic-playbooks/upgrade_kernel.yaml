@@ -1,0 +1,13 @@
+--- # Connection
+- name: Instal packages upgrade kernel
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks:
+
+  - name: Upgrade kernel 
+    ansible.builtin.package:
+      name: kernel
+      state: latest            #absent       #latest
+

@@ -1,0 +1,20 @@
+---
+- name: Add users to Amazom EC2
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  
+  vars:
+    users:
+    - bob
+    - ben
+    - lisa
+    - katty
+
+tasks:
+  - name: "Create user accounts and add users to groups"
+    user:
+      name: "{{ item }}"
+    with_items: "{{ users }}"  
+ 
