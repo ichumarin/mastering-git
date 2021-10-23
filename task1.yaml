@@ -14,12 +14,14 @@
   
   tasks:
   - name: Create user accounts and add users 
+    when: ( ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS" )
     ansible.builtin.user:  
       name: "{{ item }}"
       state: present
     with_items: "{{ users }}"  
 
   - name: Create a 2048-bit SSH key for user users in ~users/.ssh/id_rsa
+    when: ( ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS" )
     ansible.builtin.user:
       name: "{{ item }}"
       generate_ssh_key: yes

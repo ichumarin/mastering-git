@@ -1,0 +1,19 @@
+--- # Connection
+# ansible-playbook group.yaml 
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/group_module.html
+- name: Install packages
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks: 
+  - name: Ensure group "somegroup" exists
+    ansible.builtin.group:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - somegroup
+    - billing
+    - marketing
+    - sales
+
