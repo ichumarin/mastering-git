@@ -1,0 +1,14 @@
+--- # Connection
+# ansible-playbook unarchive.yaml 
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/unarchive_module.html
+- name: Install packages
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks: 
+  - name: Extract wordpress
+    ansible.builtin.unarchive:
+      src: /tmp/wordpress.tar.gz
+      dest: /tmp/
+      remote_src: true

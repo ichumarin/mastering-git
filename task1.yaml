@@ -28,3 +28,11 @@
       ssh_key_bits: 2048
       ssh_key_file: .ssh/id_rsa
     with_items: "{{ users }}"
+
+  - name: Download csv file to each user home directory 
+    when: ( ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS" )
+    get_url:
+      url: https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv
+      dest: /home/{{ item }}/addresses.cvs
+      mode: '0440'
+    with_items: "{{ users }}"

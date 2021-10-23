@@ -7,7 +7,7 @@
   become_method: sudo 
   user: ec2-user
   tasks: 
-  - name: Create fiel and change file ownership, group and permissions
+  - name: Create file and change file ownership, group and permissions
     ansible.builtin.file:
       path: /tmp/foo.conf
       owner: ec2-user
@@ -15,7 +15,7 @@
       mode: '0644'
       state: touch
 
-  - name: Recursively change ownership of a directory
+  - name: Create directory and recursively change ownership of a directory
     ansible.builtin.file:
       path: /tmp/foo
       state: directory
