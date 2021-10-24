@@ -1,0 +1,45 @@
+--- # Connection
+# ansible-playbook conditional.yaml 
+# link: https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html
+- name: Connection block
+  hosts: all
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks: 
+ 
+  # - name: Show facts available on the system
+  #   ansible.builtin.debug:
+  #     var: ansible_facts
+
+  # - name: Print Out
+  #   debug:
+  #     msg: "{{ ansible_facts }}"
+  
+  - name: Show facts available on the system
+    ansible.builtin.debug:
+      var: ansible_facts
+
+  - name: Print nodename 
+    ansible.builtin.debug:
+      var: ansible_facts['nodename']
+  
+  - name: Print kernel 
+    ansible.builtin.debug:
+      var: ansible_facts['kernel']
+  
+  - name: Print Python Version 
+    ansible.builtin.debug:
+      var: ansible_facts['python']['version']
+  
+  - name: Print OS Family 
+    ansible.builtin.debug:
+      var: ansible_facts['os_family']
+  
+  - name: Print OS Distribution
+    ansible.builtin.debug:
+      var: ansible_facts['distribution']
+
+  - name: Print Distribution Version 
+    ansible.builtin.debug:
+      var: ansible_facts['distribution_version']

@@ -1,0 +1,30 @@
+--- # Connection
+# ansible-playbook conditional.yaml 
+# link: https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html
+- name: Install packages
+  hosts: localhost
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  tasks: 
+  - name: Add users
+    when: ( ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS" )
+    ansible.builtin.user:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - ben
+    - johnd
+    - lisa
+
+
+
+  - name: Add Groups to Ubuntu
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    ansible.builtin.group:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - sales
+    - billing
+    - marketing    

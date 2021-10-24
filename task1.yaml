@@ -1,6 +1,6 @@
 ---
 - name: Add users to Amazom EC2
-  hosts: localhost
+  hosts: all
   become: true
   become_method: sudo 
   user: ec2-user
@@ -36,3 +36,22 @@
       dest: /home/{{ item }}/addresses.cvs
       mode: '0440'
     with_items: "{{ users }}"
+
+
+  - name: Install MariaDB Server On Ubuntu machine  
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    ansible.builtin.package:
+      name: 
+      - mariadb-server
+      state: present
+      update_cache: yes           
+    notify:
+    - Start DB server 
+
+  handlers:
+  - name: Start DB server
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    systemd:
+      name: mariadb-server
+      state: restarted
+      enalbed: true
