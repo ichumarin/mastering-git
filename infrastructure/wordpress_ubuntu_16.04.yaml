@@ -19,21 +19,21 @@
       state: present
       update_cache: yes     
     
-  - name: 
-    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
-    shell: "echo 'ServerName {{ hostname }}' >> /etc/apache2/apache2.conf"
-    ignore_errors: true
-    notify: 
-    - Start web server
+  # - name: 
+  #   when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+  #   shell: "echo 'ServerName {{ hostname }}' >> /etc/apache2/apache2.conf"
+  #   ignore_errors: true
+  #   notify: 
+  #   - Start web server
 
 
-  handlers:
-  - name: Start web server 
-    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
-    systemd:
-      name: apache2
-      state: restarted
-      enabled: true 
+  # handlers:
+  # - name: Start web server 
+  #   when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+  #   systemd:
+  #     name: apache2
+  #     state: restarted
+  #     enabled: true 
   
   # - name: Install httpd and prerequisites
   #   when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
