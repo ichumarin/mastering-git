@@ -1,0 +1,28 @@
+---
+- name: Add IAM users
+  hosts: localhost
+
+  vars:
+    users:
+    - user1
+    - user2
+    password: 3l6EUHxi2wL8XNR$$OUdJYES@wL#Fi6hCokl6IployJrJyRC7e
+
+  tasks:
+  - name: Create Users
+    community.aws.iam:
+      iam_type: user
+      name: "{{ item }}"
+      state: present         #absent      #update
+      password: "{{ password }}"
+      access_key_state: create
+    with_items: "{{ users }}"
+
+  - name: Create DevOps Group
+    community.aws.iam:
+      iam_type: group
+      name: "{{ item }}"
+      state: present        #absent      #update
+    loop:
+     - DevOps
+    register: new_groups

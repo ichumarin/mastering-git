@@ -1,0 +1,54 @@
+--- # Connection
+- name: Install Wordpress
+  hosts: all
+  become: true
+  become_method: sudo 
+  user: ec2-user
+  
+  # vars: 
+  #   wordpress_version: "4.0.32"
+  #   php_version: "5.4.16"
+
+  tasks: 
+  - name: Install httpd and prerequisites
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    package: 
+      name: "{{ item }}" 
+      state: present
+    with_items:
+    - httpd
+    - php
+    - php-mysql
+    - wget 
+    notify: 
+    - Start web server
+
+
+  - name: Get wordpress 
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    get_url:
+      url: https://wordpress.org/wordpress.tar.gz
+      dest: /tmp/wordpress.tar.gz
+      mode: '0440'
+
+  - name: Extract wordpress
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    ansible.builtin.unarchive:
+      src: /tmp/wordpress.tar.gz
+      dest: /var/www/html
+      remote_src: true
+
+  - name: Host Wordpress
+    when: ( ansible_facts['distribution'] == "Ubuntu" or ansible_facts['distribution_version'] == "16.04" )
+    shell: "cp -r /var/www/html/wordpress/* /var/www/html/"
+    ignore_errors: true
+
+
+  handlers:
+  - name: Start web server
+    when: ( ansible_facts['distribution'] == "Amazon" or ansible_facts['distribution'] == "CentOS" )
+    systemd: 
+      name: httpd 
+      state: restarted
+      enabled: true
+
