@@ -5,9 +5,9 @@
   become_method: sudo 
   user: ec2-user
   
-  vars: 
-    hostname: 13.59.219.242 
-    mysql_root_password: MXTS6/t!r)?3mt`J
+  # vars: 
+  #   hostname: 13.59.219.242 
+  #   mysql_root_password: MXTS6/t!r)?3mt`J
     
 
   tasks: 
