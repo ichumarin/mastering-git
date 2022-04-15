@@ -1,5 +1,5 @@
-# mastering-git-august
-Class Evolve Cyber
+# mastering-git
+
 ## header2
 ### header3
 
